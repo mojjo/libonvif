@@ -222,38 +222,38 @@ int main(int argc, char **argv)
 	struct OnvifSession *onvif_session = (struct OnvifSession*)calloc(sizeof(struct OnvifSession), 1);
 	struct OnvifData *onvif_data = (struct OnvifData*)malloc(sizeof(struct OnvifData));
 	initializeSession(onvif_session);
-	int n = broadcast(onvif_session);
-	for (int i = 0; i < n; i++) {
-		prepareOnvifData(i, onvif_session, onvif_data);
-		char host[128];
-		extractHost(onvif_data->xaddrs, host);
-		getHostname(onvif_data);
-		if (!strcmp(host, wanted)) {
-			std::cout << "  found host: " << host << std::endl;
-			if (username) strcpy(onvif_data->username, username);
-			if (password) strcpy(onvif_data->password, password);
-			if (getDeviceInformation(onvif_data)  == 0) {
-				std::cout << "  successfully connected to host" << "\n";
-				std::cout << "    name:   " << onvif_data->camera_name << "\n";
-				std::cout << "    serial: " << onvif_data->serial_number << "\n" << std::endl;
-	
-				// Initializing the session properly with the camera requires calling getCapabilities
-				if (getCapabilities(onvif_data)) {
-					std::cout << "ERROR: get capabilities - " << onvif_data->last_error << "\n" << std::endl;
-					exit(1);
-				}
-				break;
-			}
-			else {
-				std::cout << "ERROR: get device information - " << onvif_data->last_error << "\n" << std::endl;
-				exit(1);
-			}
-		}
-		if (i == n - 1) {
-			std::cout << "ERROR: camera " << wanted << " not found" << "\n" << std::endl;
-			exit(1);
-		}
-	}
+	// int n = broadcast(onvif_session);
+	// for (int i = 0; i < n; i++) {
+	// 	prepareOnvifData(i, onvif_session, onvif_data);
+	// 	char host[128];
+	// 	extractHost(onvif_data->xaddrs, host);
+	// 	getHostname(onvif_data);
+	// 	if (!strcmp(host, wanted)) {
+	// 		std::cout << "  found host: " << host << std::endl;
+	// 		if (username) strcpy(onvif_data->username, username);
+	// 		if (password) strcpy(onvif_data->password, password);
+	// 		if (getDeviceInformation(onvif_data)  == 0) {
+	// 			std::cout << "  successfully connected to host" << "\n";
+	// 			std::cout << "    name:   " << onvif_data->camera_name << "\n";
+	// 			std::cout << "    serial: " << onvif_data->serial_number << "\n" << std::endl;
+	// 
+	// 			// Initializing the session properly with the camera requires calling getCapabilities
+	// 			if (getCapabilities(onvif_data)) {
+	// 				std::cout << "ERROR: get capabilities - " << onvif_data->last_error << "\n" << std::endl;
+	// 				exit(1);
+	// 			}
+	// 			break;
+	// 		}
+	// 		else {
+	// 			std::cout << "ERROR: get device information - " << onvif_data->last_error << "\n" << std::endl;
+	// 			exit(1);
+	// 		}
+	// 	}
+	// 	if (i == n - 1) {
+	// 		std::cout << "ERROR: camera " << wanted << " not found" << "\n" << std::endl;
+	// 		exit(1);
+	// 	}
+	// }
 
 	char kybd_buf[128] = {0};
 	while (strcmp(kybd_buf, "quit")) {
